@@ -10,6 +10,7 @@
     />
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/mermaid@10/" />
     <script src="https://cdn.jsdelivr.net/npm/prismjs@1.27"></script>
+    <script src="https://cdn.jsdelivr.net/npm/docsify-plugin-footnote/dist/docsify-plugin-footnote.min.js"></script>
     <!-- MathJax 配置 -->
     <script type="text/x-mathjax-config">
       MathJax.Hub.Config({
@@ -19,11 +20,11 @@
           processEscapes: true, // 允许使用反斜杠转义
         }
       });
+    </script>
     <script>
       function showFootnote(footnote) {
-        alert(footnote.innerText); // 使用弹窗显示脚注内容，你也可以使用其他方式来显示
+        alert(footnote.innerText); // 使用弹窗显示脚注内容
       }
-    </script>
     </script>
      <style>
       .markdown-section table {
@@ -60,6 +61,7 @@
           }
         },
         plugins: [
+          DocsifyPluginFootnote.create(),
           function (hook, vm) {
             hook.ready(function () {
             // 类似 jQuery.ready 初始化 mermaid, 禁用自动渲染
