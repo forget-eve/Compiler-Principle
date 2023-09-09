@@ -20,24 +20,6 @@
         }
       });
     </script>
-    <script>
-      // 添加点击事件代理到 body 元素
-      document.body.addEventListener('click', function(event) {
-        var target = event.target;        
-        // 检查点击的元素是否是锚点链接
-        if (target.tagName === 'A' && target.getAttribute('href') && target.getAttribute('href').startsWith('#')) {
-          // 阻止默认行为
-          event.preventDefault();          
-          // 获取锚点名称，去掉开头的 #
-          var anchorName = target.getAttribute('href').substring(1);
-          // 滚动到锚点位置
-          var targetElement = document.getElementById(anchorName);
-          if (targetElement) {
-            targetElement.scrollIntoView({ behavior: 'smooth' });
-          }
-        }
-      });
-    </script>
     <style>
       .markdown-section table {
           border-collapse: collapse;
