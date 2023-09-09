@@ -21,12 +21,7 @@
         }
       });
     </script>
-    <script>
-      function showFootnote(footnote) {
-        alert(footnote.innerText); // 使用弹窗显示脚注内容
-      }
-    </script>
-     <style>
+    <style>
       .markdown-section table {
           border-collapse: collapse;
           border-spacing: 0;
@@ -41,11 +36,25 @@
   <body>
     <div id="app"></div>
     <script>
+      // 定义showFootnote函数，用于在点击脚注时显示脚注内容
+      function showFootnote(footnoteContext) {
+        alert(footnoteContext );
+      }
+    </script>
+    <script>
       window.$docsify = { 
         homepage:'README.md',
         themeColor: '#755d62',
         markdown: {
           renderer: {
+            // 重写链接渲染器以将[^1]转化为脚注
+            link: function (href, title, text) {
+              if (text.match(/^\[\d+\]$/)) {
+                var footnoteContext = href.substring(3) // 获取链接的 href，假定它包含脚注内容
+                return '<sup onclick="showFootnote('footnoteContext')">' + text + '</sup>';
+              }
+              return '<a href="' + href + '" title="' + title + '">' + text + '</a>';
+            },
             code: function(code, lang) {
               var html = '';// 搜索 mermaid 代码
               if(code.match(/^sequenceDiagram/) || code.match(/^graph/) || code.match(/^gantt/)){
