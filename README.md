@@ -38,7 +38,8 @@ E[60] -->|无同类| F(形成记号< number >)
 ### 1.1.9 解释器
 ## 1.2 编译器技术的应用（只做了解，不做考察）
 
-# 第二章 词法分析<span id="second"></span>
+# 第二章 词法分析
+<span id="second"></span>
 
 ```mermaid
 graph LR
