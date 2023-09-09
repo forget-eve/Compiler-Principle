@@ -44,6 +44,9 @@
       window.$docsify = { 
         homepage:'README.md',
         themeColor: '#755d62',
+        loadSidebar: {
+          prefix: '', // 空字符串表示禁用前缀
+        },
         markdown: {
           renderer: {
             code: function(code, lang) {
