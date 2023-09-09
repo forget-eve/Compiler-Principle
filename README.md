@@ -147,6 +147,7 @@ D --> |取下一个记号|B
 	- [x] <number，整数值60>
 
 ### 2.1.3 词法错误
+#### 定义
 - 词法分析器对源程序采取非常局部的观点
   	> 例：难以发现下面的错误
 
@@ -157,6 +158,39 @@ D --> |取下一个记号|B
 	> 删掉当前若干个字符，直至能读出正确的记号
 - 错误修补
 	> 进行增、删、替换和交换字符的尝试
+
+#### 距离
+```
+下面C语言编译器编译下面的函数时，报告
+	parse error before 'else'
+long gcd(p,q)
+long p,q;
+{
+	if (p%q == 0)
+		/* then part */
+		return q		此处遗漏分号
+	else
+		/* else part */
+		return gcd(q, p%q);
+```
+此时会尝试删除一部分，比如删去当前位置前方的 `*/` ，
+```
+现在少了第一个注释的结束符号后，反而不报错了
+long gcd(p,q)
+long p,q;
+{
+	if (p%q == 0)
+		/ then part 
+		return q
+	else
+		/ else part /
+		return gcd(q, p%q);
+}
+```
+这个说明自我改错，不一定是正确的。
+
+
+
 
 <div id="footnote" style="font-size:10px">
 	<h6 id="footnote1">
