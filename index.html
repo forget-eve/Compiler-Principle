@@ -39,6 +39,8 @@
         homepage:'README.md',
         themeColor: '#755d62',
         markdown: {
+          subScript: true, // 启用下标
+          supScript: true, // 启用上标
           renderer: {
             code: function(code, lang) {
               var html = '';// 搜索 mermaid 代码
