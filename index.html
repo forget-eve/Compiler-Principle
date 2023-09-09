@@ -10,6 +10,26 @@
     />
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/mermaid@10/" />
     <script src="https://cdn.jsdelivr.net/npm/prismjs@1.27"></script>
+    <!-- MathJax 配置 -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ], // 行内公式标记
+          displayMath: [ ['$$','$$'], ["\\[","\\]"] ], // 多行公式标记
+          processEscapes: true, // 允许使用反斜杠转义
+        }
+      });
+    </script>
+     <style>
+      .markdown-section table {
+          border-collapse: collapse;
+          border-spacing: 0;
+          margin-bottom: 1rem;
+          display: contents;
+          overflow: auto;
+          width: 100%;
+      }
+    </style>
     <title>编译原理</title>
   </head>
   <body>
