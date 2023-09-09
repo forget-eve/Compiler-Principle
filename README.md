@@ -11,7 +11,7 @@
 ## 1.1 编译器概述
 > 以下为编译的各个阶段
 ### 1.1.1 词法分析
-<a href=#second>详见第二章</a>
+<a href=.second>详见第二章</a>
 
 > 又称线性分析或扫描
 > 
@@ -40,7 +40,7 @@ E[60] -->|无同类| F(形成记号< number >)
 ## 1.2 编译器技术的应用（只做了解，不做考察）
 
 # 第二章 词法分析
-<span id="second"></span>
+<span class="second"></span>
 
 ```mermaid
 graph LR
