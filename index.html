@@ -46,14 +46,6 @@
         themeColor: '#755d62',
         markdown: {
           renderer: {
-            // 重写链接渲染器以将[^1]转化为脚注
-            link: function (href, title, text) {
-              if (text.match(/^\[\d+\]$/)) {
-                var footnoteContext = href.substring(3) // 获取链接的 href，假定它包含脚注内容
-                return '<sup onclick="showFootnote('footnoteContext')">' + text + '</sup>';
-              }
-              return '<a href="' + href + '" title="' + title + '">' + text + '</a>';
-            },
             code: function(code, lang) {
               var html = '';// 搜索 mermaid 代码
               if(code.match(/^sequenceDiagram/) || code.match(/^graph/) || code.match(/^gantt/)){
