@@ -46,18 +46,15 @@
           display: contents;
           overflow: auto;
           width: 100%;
+        .markdown-section #footnote{
+          font-size:10px;
+          font-weight:bold;
       }
     </style>
     <title>编译原理</title>
   </head>
   <body>
     <div id="app"></div>
-    <script>
-      // 定义showFootnote函数，用于在点击脚注时显示脚注内容
-      function showFootnote(footnoteContext) {
-        alert(footnoteContext);
-      }
-    </script>
     <script>
       window.$docsify = { 
         homepage:'README.md',
