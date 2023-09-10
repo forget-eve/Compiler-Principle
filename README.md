@@ -458,6 +458,7 @@ long p,q;
 <div align="center">
 <table>
   <tr>
+    <th></th>
     <th><</th>
     <th><=</th>
     <th>></th>
