@@ -289,13 +289,13 @@ long p,q;
 - 无符号数集合，例1946, 11.28, 63E8, 1.99E-6
 	> $digit → 0| 1 | … | 9$ (0~9数字集合)
 	> 
-	> $digits → digit\digit^*$ (整数集合,可以简写为 $digit^{\*}$ )
+	> $digits → digit \ digit^*$ (整数集合,可以简写为 $digit^{\*}$ )
 	>
  	> $optional_fraction → .digits|ε$ (可选的分数部分,即(.后连接一个数字)或者为空串，所以说是可选的，这里就体现了选择优先级小于连接)
 	> 
 	> $optional_exponent → ( E ( + | - | ε ) digits ) | ε$ (可选的指数部分,即(E后连接一个±或者空串在连接一个数字)或者空串，所以是可选的)
 	>
-	> $number → digits\optional_fraction\optional_exponent$
+	> $number → digits \ optional_fraction \ optional_exponent$
  	> > 简化表示: $number → digit^+ (.digit^+)? (E(+|-)? digit^+)?$ (?在这里可以代表可以为?前的正规式或者为空串)
 
 
