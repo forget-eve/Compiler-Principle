@@ -222,7 +222,7 @@ long p,q;
 ### 2.2.2 正规式
 #### 定义
 - ***正规式(又称正规表达式，正则表达式 <sup id="back2"><a href="#/?id=footnote2">2✍</a></sup>)*** : **按照一组定义规则，由较简单的正规式构成的，每个正规式r表示一个语言L(r)**
-	> 通俗理解，正规式就是一套规则定义。
+	> 通俗理解，正规式就是一套规则定义，里面的实例为满足该规则的词法单元。
 - **以下是字母表 $\sum$ 上正规式的规则，和每条规则相联系的是被定义的正规式所表示的语言的描述：**
 	> 1. $\epsilon$ 是正规式，它表示{ $\epsilon$ }
 	> 2. 如果a是 $\sum$ 上的符号，那么a可以作为正规式，他表示语言{a}。虽然都用a表示，但是正规式a是不同于{a}中的句子a的，从上下文可以清楚地区别所谈到的a是正规式还是串。
@@ -340,9 +340,82 @@ long p,q;
   > - [x] ***最长匹配下，do8被解释为一个标识符；规则优先下，do是一个关键字***
 
 ### 2.2.4 状态转换图
-- 在上述的正规定义的例子<sup id="next1"><a href="#/?id=ExampleBack">➹</a></sup>中
+#### 定义
+- 在上述的正规定义的例子<sup id="next1"><a href="#/?id=ExampleBack">➹</a></sup>中，可以看到，在词法单元中还有间隔符ws，词法分析器通过把剩余输入的前缀(即一个语法单元前面多余的部分)和ws相比较来完成忽略的词法单元之间的空白。
+- 如果剩余输入的前缀可以由ws匹配，词法分析器不返回记号给分析器，继续寻找空白后面的记号，然后再返回到分析。一般的正规式是有对应记号的。但是正规式ws没有对应的记号，可见下表。
 
-[点击次数](#next1)
+<div align="center">
+	<table>
+  <tr>
+    <th>正规式</th>
+    <th>记号名</th>
+    <th>属性值</th>
+  </tr>
+  <tr>
+    <td><strong>ws</strong></td>
+    <td>-</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>while</td>
+    <td><strong>while</strong></td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>do</td>
+    <td><strong>do</strong></td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td><strong>id</strong></td>
+    <td><strong>id</strong></td>
+    <td>符号表条目的指针</td>
+  </tr>
+  <tr>
+    <td><strong>number</strong></td>
+    <td><strong>number</strong></td>
+    <td>数表条目的指针</td>
+  </tr>
+  <tr>
+    <td>while</td>
+    <td><strong>while</strong></td>
+    <td>LT(<)、LE(≤)、EQ(=)、NE(≠)、GT(>)或GE(≥)</td>
+  </tr>
+</table>
+</div>
+
+- *绘制 **状态转换图(简称转换图)** 是构造词法分析器的第一步* 。***状态转换图描绘词法分析器被语法分析器调用时，词法分析器未返回下一个记号所做的动作*** 。
+
+#### 示例
+- ***关系算符的转换图***
+
+```mermaid
+graph LR
+A[开始] --> B((0))
+B --> | < | C((1))
+C --> | = | D("2 return(relop,LE)")
+C --> | > | E("3 return(relop,NE)")
+C --> |other| F("4* return(relop,LT)")
+B --> | = | G("5 return(relop,EQ)")
+B --> | > | H((6))
+H --> | = | I("7 return (relop,GE)")
+H --> |other| J("8* return (relop,GT)")
+K[*表示要多读一个符号]
+```
+
+#### 
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 <p> </p>
