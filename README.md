@@ -286,6 +286,11 @@ long p,q;
   > - [x] 满足上述两个条件后，每个 $r_i$ 都只能含有 $\sum$ 上的符号和前面定义的名字，因此不会出现递归定义的情况。这些名字用其所表示的正规式来代替，就可以为任何 $r_i$ 构造 $\sum$ 上的正规式。
 
 #### 示例
+- C语言的 **标识符** 是字母、数字和下划线组成的串 
+	> $letter\underline{}→ A | B | … | Z | a | b | … | z |\underline{}&
+	> $digit→ 0 | 1 | … | 9$
+	> $id→letter\underline{}(letter\underline{}|digit)^*$
+
 - 无符号数集合，例1946, 11.28, 63E8, 1.99E-6
 	> $digit → 0| 1 | … | 9$ (0~9数字集合)
 	> 
@@ -298,9 +303,31 @@ long p,q;
 	> $number \rightarrow digits \ optional\underline{}fraction \ optional\underline{}exponent$
  	> > 简化表示: $number → digit^+ (.digit^+)? (E(+|-)? digit^+)?$ (?在这里可以代表可以为?前的正规式或者为空串)
 
+- 正规定义的例子（进行下一步讨论的例子）
+	- [x] $while → while$
+	- [x] $do → do$
+	- [x] $relop → < | < = | = | < > | > | > =$
+	- [x] $letter → A | B | … | Z | a | b | … | z$
+	- [x] $id → letter (letter | digit )^*$
+	- [x] $number → digit^+(.digit^+)? (E (+|-)? digit^+)?$
+	- [x] $delim → blank | tab | newline$ (非终结符号，表示分隔符,后面分别代表空格、制表符和换行符)
+	- [x] $ws → delim^+$ (通常表示空白字符（whitespace）)
 
+#### 关于部分简写
+- [x] ***?***:**零个或者一个实例。 $r?=r|\epsilon$ , $(r)?=L(r) \cup \lbrace \epsilon \rbrace$**
+- [x] ***字符组***:**[abc](a、b和c是字母表的符号)表示正规式 $a|b|c$。缩写字符组[a-z]表示正规式 $a|b|...|z$ 。例如 $letter\underline{} → [A-Za-z]$ 。**
 
+#### 例题
+- 问题：写出语言“所有相邻数字都不相同的非空数字串”的正规定义
+  > - [x] $no\underline{}0-8 → 9$
+	> - [x] ...(重复定义就可以)
+  > - [x] $no\underline{}0 → (1|no\underline{}0-1 \ 1) (no\underline{}0-1 \ 1 )^*(no\underline{}0-1 | \epsilon) | no\underline{}0-1... $
+  > - [x] $answer → (0|\epsilon ) (no\underline{}0 \ 0 )^* (no\underline{}0  | \epsilon )|no\underline{}0$
+  > - [x] $answer → (0 |no\underline{}0 \ 0 ) (no\underline{}0 \ 0 )^* (no\underline{}0  | \epsilon)|no\underline{}0$
 
+#### 二义性及其消除
+
+### 2.2.4 状态转换图
 
 
 
