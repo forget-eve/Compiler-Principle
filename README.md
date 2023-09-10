@@ -304,8 +304,8 @@ long p,q;
 	>
 	> $number \rightarrow digits \ optional\underline{}fraction \ optional\underline{}exponent$
  	> > 简化表示: $number → digit^+ (.digit^+)? (E(+|-)? digit^+)?$ (?在这里可以代表可以为?前的正规式或者为空串)
-
-- 正规定义的例子（进行下一步讨论的例子）
+	
+- 正规定义的例子（进行下一步<sup id="ExampleBack"><a href="#/?id=next1">➷</a></sup>讨论的例子）
 	- [x] $while → while$
 	- [x] $do → do$
 	- [x] $relop → < | < = | = | < > | > | > =$
@@ -340,9 +340,9 @@ long p,q;
   > - [x] ***最长匹配下，do8被解释为一个标识符；规则优先下，do是一个关键字***
 
 ### 2.2.4 状态转换图
+- 在上述的正规定义的例子<sup id="next1"><a href="#/?id=ExampleBack">➹</a></sup>中
 
-
-
+[点击次数](#next1)
 
 
 <p> </p>
