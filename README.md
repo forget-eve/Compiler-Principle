@@ -888,11 +888,36 @@ else return "no";
 > 本题思路同上，所以不进行赘述。DFA图见上，正规定义如下：
 > > $str1=(0|11)(01^{\*}01)^{\*}*1$ , $str2=10|(0|11)(01^{\*}01)^{\*}01^{\*}00$ ,正规定义为 $answer=(0|1str2^{\*}str1)^{\*}$ 。
 
+> 例5：画出DFA，接受0和1的个数都是偶数的字符串
 
+<p align="center">
+	<img src="./img/DFA4.png" alt="0和1的个数都是偶数的字符串DFA">
+        <p align="center">
+          <span>0和1的个数都是偶数的字符串DFA<span>
+        </p>
+</p>
 
+> DFA图见上,解题思路和例题3,4一样所以不做赘述。
 
+> 例6：叙述下面的正规式描述的语言，并画出接受该语言的最简DFA的状态转换图 $$(1|01)^{\*}0^{\*}$$
+> > 描述的语言是所有不含子串001的0和1的串
+> 画图的思路为：
 
+<p align="center">
+	<img src="./img/DFA5.png" alt="(1|01)*0*的DFA">
+        <p align="center">
+          <span>(1|01)*0*的DFA<span>
+        </p>
+</p>
 
+> 例7：用状态转换图表示接受 $(a|b)^{\*}a(a|b)(a|b)$ 的DFA
+
+<p align="center">
+	<img src="./img/DFA6.png" alt="(a|b)*a(a|b)(a|b)的DFA">
+        <p align="center">
+          <span>(a|b)*a(a|b)(a|b)的DFA<span>
+        </p>
+</p>
 
 
 <p> </p>
