@@ -951,7 +951,7 @@ else return "no";
 > >
 > > 输出 一个接受同样语言的 `DFA D` 。
 > >
-> > 方法 为D构造转换表Dtran，表中的每个状态是N的状态集合，D“并行”地模拟N面对输入串的所有可能的移动。
+> > 方法 为D构造转换表 *Dtran* ，表中的每个状态是N的状态集合，D“并行”地模拟N面对输入串的所有可能的移动。
 
 > 下图定义的三个函数描述了在N状态上的基本运算。注意代表N的单个状态，T代表N的一个状态集合。
 
@@ -959,12 +959,12 @@ else return "no";
 
 |运算|描述|
 |----|----|
-| *$\epsilon -closure(s)$* |从NFA的状态s出发，只用e转换能到达的NFA状态集合|
+| $\epsilon -closure(s)$ |从NFA的状态s出发，只用e转换能到达的NFA状态集合|
 | $\epsilon -closure(T)$ | *NFA* 的状态集合 $\Cup_{i \in T}\epsilon -closure(t)$ |
 |move(T,a)| *NFA* 的状态集合 $\Cup_{i \in T}move(t,a)$ (move被拓展成多态函数)|
 
-- 在读第一个输入符号前，N可以处于集合 $\epsilon -closure(s_0)$ 的任何状态，其中 $s_0$ 是N的开始状态。假定集合T是从 $s_0$ 出发，面临某个输入串所能到达的所有状态的集合,令a是下一个输入符号，那么看见a时,N可以移动到集合 move(T，a)中的任何一个状态。由于允许 $\epsilon$ 转换,看见α后，N可以处于 $\epsilon -closure(move(T,a))$ 中的任何一个状态。
-- 按上面的算法就是按子集构造法思想来构造D的状态集合Dstates和转换表Dtran。D的开始状态是 $\epsilon -closure(s_0)$ 。如果D的某个状态所对应的状态集至少含N的一个接受状态，那么它是D的一个接受状态。
+- 在读第一个输入符号前，N可以处于集合 $\epsilon -closure(s_0)$ 的任何状态，其中 $s_0$ 是N的开始状态。假定集合T是从 $s_0$ 出发，面临某个输入串所能到达的所有状态的集合,令a是下一个输入符号，那么看见a时,N可以移动到集合move(T，a)中的任何一个状态。由于允许 $\epsilon$ 转换,看见α后，N可以处于 $\epsilon -closure(move(T,a))$ 中的任何一个状态。
+- 按下面的算法就是按子集构造法思想来构造D的状态集合Dstates和转换表Dtran。D的开始状态是 $\epsilon -closure(s_0)$ 。 ***如果D的某个状态所对应的状态集至少含N的一个接受状态，那么它是D的一个接受状态。***
 ```算法
 初始时，e-closure（so）是Dstates仅有的状态，并且尚未标记；
 while（Dstates有尚未标记的状态T){
@@ -993,6 +993,25 @@ while（栈非空）{
 ```
 
 #### 举例
+> 下图是接受语言 $(a|b)^{\*}ab$ 的另一个 `NFA N` ,对N执行上述算法，其等价的DFA的开始状态是 $espsilon -closure(0)$ ,记为A={0,1,2,4,7}，因为它们正好是从 `状态0` 出发，经过标记都是 $\epsilon$ 的路径所能到达的所有状态。由于路径可以没有边，所以0也是经过这样的路径从0能达到的状态。
+
+<p align="center">
+	<img src="./img/NFA转化DFA2.png" alt="识别(a|b)*ab的NFA">
+        <p align="center">
+          <span>识别(a|b)*ab的NFA<span>
+        </p>
+</p>
+
+> 这里的输入字母表是{a,b}。根据之前的算法，首先标记A，然后计算 $\epsilon -closure(move(A,a))$ ，由于在A={0,1,2,4,7}中，只有 `状态2` 和 `状态7` 能发生a转换，分别转变为 `状态3` 和 `状态8` ，因此move(A,a)={3,8}。
+>
+> 所以 $\epsilon -closure(move(A,a))=\epsilon -closure(\lbrace 3,8\rbrace)=\lbrace 1,2,3,4,6,7,8\rbrace$
+>
+> 后一步的结果是因为 $\epsilon -closure(3)=\lbrace 1,2,3,4,6,7\rbrace$ 并且 $\epsilon -closure(8)=\lbrace 8\rbrace$ 。称这个集合为B，所以， *Dtran[A,a]=B* 。
+>
+> 在A中，只有 `状态4` 发生b转换到达 `状态5` ，所以状态A的b转换到达 $\epsilon -closure(move(A,b))=\epsilon -closure(\lbrace 5\rbrace)=\lbrace 1,2,4,5,6,7\rbrace$ 令该集合为C，所以， *Dtran[A,b]=C* 。
+> 
+
+
 ### 2.3.4 DFA的化简
 - [x] 理论上的一个重要结论是，每一个正规集都可以由一个状态数最少的DFA识别，这个DFA是唯一的（因状态名不同的同构情况除外）。本小节介绍如何把一个DFA化简到状态数最少，并且识别同样的语言。
 - [x] 这里所用方法基于转换函数是全函数。如果一个DFA的转换函数不是全函数，可以引人一个“死状态” $s_d$ , $s_d$ 对所有输入符号都转换到 $s_d$ 本身。如果状态s对符号a没有转换，那么加上从s到 $s_d$ 的a转换。显然，加入死状态后的DFA和原来的DFA等价。由此可知，DFA也可以基于move函数是全函数来定义。
