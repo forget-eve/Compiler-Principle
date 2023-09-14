@@ -939,8 +939,8 @@ else return "no";
 
 > 可见下图，右边为一个NFA图，左侧为其对应的DFA图，右侧的NFA图中可以看到0状态可以输入a到达自身或者1状态，而左侧DFA图对应的看到从0状态(左上角/右上角)，输入a可以到达0状态(右上角),而也可以从0状态(左上角/右上角)输入a变为1状态(右上角)，也可由0状态输入b到达0状态。但是DFA每个状态在输入同一个条件时的不会到达多个不同状态。
 
-p align="center">
-	<img src="./img/NFA转换DFA1.png" alt="NFA转换DFA示例">
+<p align="center">
+	<img src="./img/NFA转化DFA1.png" alt="NFA转换DFA示例">
         <p align="center">
           <span>NFA转换DFA示例<span>
         </p>
