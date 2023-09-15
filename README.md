@@ -1009,8 +1009,60 @@ while（栈非空）{
 > 后一步的结果是因为 $\epsilon -closure(3)=\lbrace 1,2,3,4,6,7\rbrace$ 并且 $\epsilon -closure(8)=\lbrace 8\rbrace$ 。称这个集合为B，所以， *Dtran[A,a]=B* 。
 >
 > 在A中，只有 `状态4` 发生b转换到达 `状态5` ，所以状态A的b转换到达 $\epsilon -closure(move(A,b))=\epsilon -closure(\lbrace 5\rbrace)=\lbrace 1,2,4,5,6,7\rbrace$ 令该集合为C，所以， *Dtran[A,b]=C* 。
-> 
+>
+> 用尚未标记的新集合B和C继续这个过程，最终达到这样一点：所有的集合(即DFA的所有状态)都已经被标记。因为10个状态的集合的不同子集只有 $2^10$ ，一个集合一旦标记就永远是标记的，所以计算终止时坑定的。本例实际构造出的4个不同状态集合是：
 
+```math
+A={0,1,2,4,7},
+B={1,2,3,4,6,7,8},
+C={1,2,4,5,6,7},
+D={1,2,4,5,6,7,9}
+```
+
+> 由上可知， `状态A` 为 `开始状态` ， `状态D` 由于包含NFA中唯一的接受状态，所以D为 `接受状态` ，完整的转换表Dtran如下所示。
+
+<div align="center">
+	<p align="center"><span>DFA的转化表Dtran</span></p>
+	<table>
+	  <tr>
+	    <th rowspan="2">状态</th>
+	    <th colspan="2">输入符号</th>
+	  </tr>
+	  <tr>
+		<td>a</td>
+		<td>b</td>
+	  </tr>
+	  <tr>
+	    <td>A</td>
+	    <td>B</td>
+	    <td>C</td>
+	  </tr>
+	  <tr>
+	    <td>B</td>
+	    <td>B</td>
+	    <td>D</td>
+	  </tr>
+	  <tr>
+	    <td>C</td>
+	    <td>B</td>
+	    <td>C</td>
+	  </tr>
+	  <tr>
+	    <td>D</td>
+	    <td>B</td>
+	    <td>C</td>
+	  </tr>
+	</table>
+</div>
+
+> 最后所得到的DFA转化图为下图左图所示，右图也为接受语言 $(a|b)^{\*}ab$ 的DFA，比左图少一个状态，所以说明子集构造法不一定得到最简DFA图。
+
+<p align="center">
+	<img src="./img/NFA转化DFA3.png" alt="从NFA构造识别(a|b)*ab的DFA">
+        <p align="center">
+          <span>从NFA构造识别(a|b)*ab的DFA<span>
+        </p>
+</p>
 
 ### 2.3.4 DFA的化简
 - [x] 理论上的一个重要结论是，每一个正规集都可以由一个状态数最少的DFA识别，这个DFA是唯一的（因状态名不同的同构情况除外）。本小节介绍如何把一个DFA化简到状态数最少，并且识别同样的语言。
