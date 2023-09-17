@@ -1216,13 +1216,34 @@ for（∏中的每个子集G）{
 
 4. 对于外加括号的正规式(s），对应s的N(s)就作为(s)的NFA。对于每次构造的新状态都赋予不同的名字。这样，所有的状态都有不同的名字。可以检验，上述算法的每一步都构造产生识别对应语言的NFA。此外，产生的NFA有下列性质。
 	> （1）N(r)的状态数最多是r中符号和算符总数的两倍。因为构造的每一步最多引入两个新的状态。
+	> 
 	> （2）N(r)只有一个接受状态，接受状态没有向外的转换。
+ 	> 
  	> （3）N(r)的每个状态有一个用 $\sum$ 的符号标记的指向其他状态的转换，或者最多两个指向其他状态的 $\epsilon$ 转换。
 
 <p align="center">
 	<img src="./img/转换5.png" alt="识别(a|b)*ab的NFA">
         <p align="center">
           <span>识别(a|b)*ab的NFA<span>
+        </p>
+</p>
+
+### 示例
+> 用上述算法构造正规式 $r=(a|b)^{\*}ab$ 的 `NFA N(r)` 。下图为r的分析树。对于其中的 $r_1$ 和 $r_2$ ，构造它们的NFA，再用选择规则组合 $N(r_1)$ 和 $N(r_2)$ ，得到 $r_3=r_1|r_2$ 的NFA。( $r_3$ )的NFA和 $r_3$ 的一样，再构造 $(r_3)^{\*}$ 的NFA。这样依次下去，最后得到  $r=(a|b)^{\*}ab$ 的 `NFA N(r)` 。
+
+<p align="center">
+	<img src="./img/分析树.png" alt="(a|b)*ab的分析树">
+        <p align="center">
+          <span>(a|b)*ab的分析树<span>
+        </p>
+</p>
+
+> 从手工构造NFA的角度看，上述算法的缺点是引入了大量的 $\epsilon$ 转换，使得后面手工将NFA转换为DFA时，容易因疏忽而出错。因此在手工构造NFA时，应该避免引入 $\epsilon$ 转换，比如下图上方的就更加简单。
+
+<p align="center">
+	<img src="./img/比较.png" alt="(a|b)*ab两个NFA的比较">
+        <p align="center">
+          <span>(a|b)*ab两个NFA的比较<span>
         </p>
 </p>
 
