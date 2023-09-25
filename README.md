@@ -1619,13 +1619,132 @@ $$E ⟹_{lm} -E ⟹_{lm} -(E) ⟹_{lm} -(E + E) ⟹_{lm} -(id + E) ⟹_{lm} -(id
 	> 1. 若把词法分析和语法分析合在一起，则必须将语言的注解和空白的规则反映在文法中，文法将大大复杂
 	> 2. 注解和空白由自己来处理的分析器，比注解和空格已由词法分析器删除的分析器要复杂得多
 
+### 3.2.3 验证文法产生的语言
+- [x] $G : S → (S) S | \epsilon$    L(G) = 配对的括号串的集合
+- [x] 按推导步数进行归纳：推出的是配对括号串
+	> 归纳基础： $S ⟹ ε$ ，一步推导能得到的终结符只有空串，是配对的
+	> 
+	> 归纳假设：少于n步的推导都产生配对的括号串
+	>
+	> 归纳步骤：n步的最左推导如下：
+	> > $S ⟹ (S)S ⟹^{\*} (x)S ⟹^{\*} (x)y$
+	> > > 由于从S到x和y的推导分别都少于n步，由归纳假设可知，x和y都是配对括号串，所以串(x)y是配对括号串 
+- [x] 按串长进行归纳：配对括号串可由S推出
+	> 归纳基础： $S ⟹ ε$ ，空串能由S一步推导得到
+	> 
+	> 归纳假设：长度小于2n的都可以从S推导出来
+	> 
+	> 归纳步骤：考虑长度为2n(n≥1)的w=(x)y
+	> > $S ⟹ (S)S ⟹^{\*} (x)S ⟹^{\*} (x)y$
+	> > > 从而证明了w=(x)y 可以由S推导出来
 
+### 3.2.4  适当的表达式文法
+- [x] 3.1节构造的表达式文法有二义性，一个句子的不同分析树体现了不同的算符优先关系和算符结合性。下面构造非二义的有+和*运算的表达式文法，该文法和通常的算符优先关系和算符结合性相对应。
 
+- [x] 设置两个非终结符expr 和term(expr是开始符号），用以表示不同层次的表达式和子表达式，再用非终结符factor 来产生表达式的基本单位。基本单位有id和外加括号的表达式，即
 
+$$factor → id | (expr)$$
 
+- [x] 然后考虑二元算符*，它有较高的优先级，又是左结合的算符，因而产生式如下：
 
+$$term → term *factor | factor$$
 
+- [x] 同样地，expr产生由加法算符隔开的、左结合的term表，其产生式如下：
 
+$$expr → expr + term | term$$
+
+- [x] 这个表达式文法是无二义的。句子 $id\*id\*id$ 和 $id+id\*id$ 的分析树如下图所示。
+
+<p align="center">
+	<img src="./img/适当的表达式文法.png" alt="id*id*id和id+id*id的分析树">
+        <p align="center">
+          <span>id*id*id和id+id*id的分析树<span>
+        </p>
+</p>
+
+- [x] 上面两棵分析树所表现出的算符优先关系和结合性与通常的规定是一致的。可以看出，如果语言语义所规定的算符优先关系和结合性不是这样的话，则文法可能需要重新设计，否则所得到的分析树就不能很方便地用于语义分析和中间代码生成等阶段。例如假设*和+是又结合的运算，那么文法应该为
+	> $expr → expr + term | term$
+	> 
+	> $term → term * factor | factor$
+	> 
+	> $factor → id | (expr)$
+	>
+	> 此时的分析树和上述的分析树基本为镜像对称关系
+ 
+### 3.2.5 消除二义性
+- [x] 部分文法可以通过重写而消除二义性，例如：
+> 消除下面“悬空else”文法的二义性：
+```文法1
+stmt → if expr then stmt
+      | if expr then stmt else stmt
+      | other 
+```
+- [x] 这里面的other代表任何其他语句。按照这个文法1，形式为 $if \ expr \ then \ if \ expr \ then \ stmt \ else \ stmt$ 的嵌套条件语句有两个最左推导，所以是二义的:
+
+$$stmt ⟹ if \ expr \ then \ stmt ⟹ if \ expr \ then \ if \ expr \ then \ stmt \ else \ stmt$$
+
+$$stmt ⟹ if \ expr \ then \ stmt \ else \ stmt ⟹ if \ expr \ then \ if \ expr \ then \ stmt \ else \ stmt$$
+
+- [x] 所有含这种条件语句的语言都使用前一种最左推导，因为它和这些语言所采用的规则“每个else和左边最接近的还没有配对的then相配对”是一致的。这条规则可以直接体现在文法中，例如，可以将上面的“悬空else”文法1改写为一下文法，以达到出现在then和else中间的运距必须是“配对”的，配对语句是指不是条件语句的语句还有只含函配对语句的if-then-else语句。
+
+```文法2
+stmt → matched _stmt
+     | unmatched_stmt
+matched_stmt → if expr then matched_stmt else matched_stmt 
+             | other
+unmatched_stmt → if expr then stmt
+	       | if expr then matched_stmt else unmatched_stmt
+```
+- [x] 文法1和文法2产生同样的串集，但是对于上述的句型而言只存在一种最左推导。注意， `unmatched_stmt` 第二个产生式的右部 `if expr then matched_stmt else unmatched_stmt` 的 `matched_stmt` 和 `unmatched_stmt` 是不能对调的，否则仍然是二义的。
+
+> ***但是一般就用文法1，因为文法2较为复杂。***
+
+#### 例题
+- [x] 下面的条件语句文法仍存在二义，请证明
+```文法
+stmt → if expr then stmt | matched_stmt
+matched_stmt → if expr then matched_stmt else stmt | other
+```
+> 证明：如下图所示
+
+<p align="center">
+	<img src="./img/消除二义性的举例.png" alt="消除二义性的举例">
+        <p align="center">
+          <span>消除二义性的举例<span>
+        </p>
+</p>
+
+> 绿色部分可以由两种方式分别代替(绿色虚线部分)
+
+### 3.2.6 消除左递归(重点)
+- [x] 如果一个文法有非终结符A,对某个串 $\alpha$ ，存在推导 $A ⟹^+ Aα$，那么它是 ***左递归的*** 。 自上而下的分析方法不能用于左递归文法，因此需要消除左递归。有形式 $A → Aα$ 的产生式引起的左递归称为 ***直接左递归*** 。
+- [x] 例如：左递归产生式 $A→A\alpha | \beta$ ，串的特点为 $\beta\alpha ... \alpha$
+	> 可以用非左递归的 $A → βA'$ , $A' → αA' | \epsilon$ 来代替，它们没有改变从A推导出的串集。
+
+#### 举例
+> 考虑下面的算术表达文法
+
+```文法
+E → E + T | T		( T + T . . . + T )
+T → T * F | F		( F * F . . . * F )
+F → ( E ) | id
+```
+
+- [x] 消除E和T的直接左递归，可以得到
+
+```文法
+E → T E'
+E' → + T E' | ε
+T → F T'
+T' → * F T' | ε
+F → ( E ) | id
+```
+
+### 3.2.7 提左因子
+
+### 3.2.8 非上下文无关的语言构造
+
+### 3.2.9 形式语言鸟瞰
 
 
 
