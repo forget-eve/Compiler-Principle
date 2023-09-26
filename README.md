@@ -1510,7 +1510,7 @@ static int LexTable[6][4]=
 > >
 > > 如果 $A→\alpha _1,A→\alpha _2,...,A→\alpha _k$ 是所有以A为左部的产生式(称它们为A的产生式)，则可以把它们写成 $A→\alpha _1|\alpha _2|...|\alpha _k$ 的形式，称这些产生式的右部 $\alpha _1,\alpha _2,...,\alpha _k$ 是A的选择
 
-> ***文法本身是不包含 “|” “\*”等运算符的***
+> ***文法本身是不包含 "|" " \* "等运算符的***
 
 > 上述例子可简化表示为
 > > $expr → expr op expr | (expr) | - expr | id$
