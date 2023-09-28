@@ -1938,7 +1938,7 @@ F → ( E ) | id
 
 - 在讨论不得回溯的前提对文法有什么限制之前，先定义两个和文法有关的函数。一个文法的符号串 $\alpha$ 的开始符号集合  $FIRST(\alpha)$ 是
 
-$$FIRST (a)={ala$$
+$$FIRST(\alpha)=\lbrace  a|\alpha ⟹^{\*} a...,a \in V_T \rbrace$$
 特别是，α→”ε时，规定εEFIRST(a)。如果对A的任何两个不同的选择c；和α，有
 FIRST(a,)nFIRST(a)= 0
 那么，当要求匹配输入串时，A就能根据它所面临的第一个输入符号a，准确地指派某一个选择
@@ -1996,7 +1996,6 @@ if(lookahead == integer)match (integer);
 else if (lookahead == char) match (char);
 else if (lookahead == num){match(num);match(dotdot);match(num)；)
 else error();
-
 
 ### 3.3.4 非递归的预测分析
 - [x] 如果显式地维持一个栈，而不是隐式地通过递归调用，那么可以构造非递归的预测分析器。预测分析的关键问题是，在扩展一个非终结符时怎样为它选择合适的产生式，图中的非递归的预测分析器通过查分析表来决定产生式。
