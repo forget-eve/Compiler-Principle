@@ -1939,63 +1939,85 @@ F → ( E ) | id
 - 定义两个和文法有关的函数。一个文法的符号串 $\alpha$ 的开始符号集合  $FIRST(\alpha)$ 是
 
 $$FIRST(\alpha)=\lbrace  a|\alpha ⟹^{\*} a...,a \in V_T \rbrace$$
-特别是，α→”ε时，规定εEFIRST(a)。如果对A的任何两个不同的选择c；和α，有
-FIRST(a,)nFIRST(a)= 0
-那么，当要求匹配输入串时，A就能根据它所面临的第一个输入符号a，准确地指派某一个选择
-前去执行任务。这个选择就是满足ae FIRST（a）的那个α。
-已经介绍过，用提取左因子的办法，可以把文法改造成对任何非终结符A，A的所有选择的开始符号集合两两不相交。
-如果ε属于A的某个选择的开始符号集合，那么问题就比较复杂，需要定义文法非终结符的后继符号集合后才能解释。非终结符A的后继符号集合 FOLLOW(A)是所有在句型中可以直接出现在A后面的终结符的集合，也就是
-FOLLOW (A)= {a lS=".Aa--,aeVr)
-如果A是某个句型的最右符号，那么$也属于FOLLOW(A）。
-例3.12考虑(3.8）的文法，把它重复如下：
-E→TE'
-E'→ +TE'| ε
-T' →*FT' I 8
-T→ FT'
-F→(E)| id
-FIRST(E)= FIRST(T)= FIRST(F)= |(，id)
-FIRST(E')= {+,8l
 
-FIRST(T'）=（*，s)
-有了上面这些FIRST集合后，就不难计算各产生式右部的FIRST集合了。例如，对于个、再看FOLLOW集合。这里要注意的是，如果有产生式A→aB或A→αBβ且β→”ε，那公FOLLOW(A)的一切元素都要加人FOLLOW(B）中。
-FT',FIRST(FT')= FIRST(F)={(，id/o
-FOLLOW(E)= FOLLOW(E')=（)，$}FOLLOW(T)= FOLLOW(T')=（+，)，$)FOLLOW(F)= |+，*，)，$)
-设计一个算法来计算开始符号集合和后继符号集合是件简单的事情。
-下面回到8属于A的某个选择β的开始符号集合这个问题。如果a属于A的另一个选择，的开始符号集合，并且a属于FOLLOW(A）,那么当面临a为A做选择时，选择α和β都是有理的，其中选择后者的理由是让β推出空串，把这个a看成是A的后继符号。
-这样，要想不出现回溯，需要文法的任何两个产生式A→a1β都满足下面两个条件：
-(1) FIRST(a )NFIRST(β)=0;
-（2)若β=°ε,那么FIRST(a)nFOLLOW(A）=0。
-把满足这两个条件的文法称为LL(1)文法，其中的第一个“L”代表从左向右地扫描输人，第二个“L”表示产生最左推导，“1”代表在决定分析器的每步动作时需要向前查看下一个输入符号（即输入指针所指向的符号)。除了没有公共左因子外，LL(1)文法还有一些明显的性质，它不是二义的，也不含左递归。还有一些性质将在3.3.5节构造预测分析表时再介绍。很明显，（3.8的表达式文法是LL（1）的。
+- [x] 特别是， $\alpha ⟹^{\*} \epsilon$ 时，规定 $\epsilon \in FIRST(\alpha)$ 。如果对A的任何两个不同的选择 $\alpha_i$ 和 $\alpha_j$ 有
+
+$$FIRST(\alpha _i) \cap FIRST(\alpha _j)=\varnothing$$
+
+- [x] 那么，当要求匹配输入串时，A就能根据它所面临的第一个输入符号a，准确地指派某一个选择前去执行任务。这个选择就是满足 $a \in FIRST(\alpha)$ 的那个 $\alpha$ 。用提取左因子的办法，可以把文法改造成对任何非终结符A，A的所有选择的开始符号集合两两不相交。
+- [x] 如果 $\epsilon$ 属于A的某个选择的开始符号集合，那么问题就比较复杂，需要定义文法非终结符的后继符号集合后才能解释。非终结符A的后继符号集合 $FOLLOW(A)$ 是所有在句型中可以直接出现在A后面的终结符的集合，也就是
+
+$$FOLLOW(A)= \lbrace a|S⟹^{\*} ...Aa...,a \in V_T \rbrace$$
+
+> 如果A是某个句型的最右符号，那么\$也属于 $FOLLOW(A)$ 。
+
+> 考虑之前例子中的文法，把它重复如下：
+
+```文法
+E → TE'             E' → +TE'|ε
+T' →* FT'|ε         T → FT'
+F → (E)|id
+```
+
+> > 则有
+```文法
+FIRST(E) = FIRST(T)= FIRST(F)= {(，id}
+FIRST(E') = {+, ε}
+FIRST(T') = (*，s)
+```
+
+- [x] 有了上面这些FIRST集合后，就不难计算各产生式右部的FIRST集合了。例如，对于 $T→FT',FIRST(FT')= FIRST(F)=\lbrace (,id\rbrace$ 。再看 *FOLLOW* 集合。这里要注意的是，如果有产生式 $A→ \alpha B$ 或 $A→αBβ$ 且 $β→^{\*}ε$ ，那么 $FOLLOW(A)$ 的一切元素都要加人 $FOLLOW(B)$ 中。
+
+```文法
+FOLLOW(E) = FOLLOW(E') = {)，$}
+FOLLOW(T) = FOLLOW(T') = {+，)，$}
+FOLLOW(F) = {+，*，)，$}
+```
+
+- [x] 下面回到 $\epsilon$ 属于A的某个选择 $β$ 的开始符号集合这个问题。如果 *a* 属于 *A* 的另一个选择 $\alpha$ 的开始符号集合，并且 *a* 属于 *FOLLOW(A)* ,那么当面临 *a* 为 *A* 做选择时，选择 $α$ 和 $β$ 都是有理的，其中选择后者的理由是让 $β$ 推出空串，把这个 *a* 看成是 *A* 的后继符号。
+- [x] 想不出现回溯，需要文法的任何两个产生式 $A→a|β$ 都满足下面两个条件：
+	> (1)  $FIRST(a) \cap FIRST(β)= \varnothing$ ;
+	> 
+	> (2)若 $β ⟹^{\*} ε$ ,那么 $FIRST(\alpha) \cap FOLLOW(A）= \varnothing$ 。
+- [x] 把满足这两个条件的文法称为 ***LL(1)文法*** ，其中的第一个“L”代表从左向右地扫描输人，第二个“L”表示产生最左推导，“1”代表在决定分析器的每步动作时需要向前查看下一个输入符号（即输入指针所指向的符号)。除了没有公共左因子外，LL(1)文法还有一些明显的性质，它不是二义的，也不含左递归。
 
 ### 3.3.3 递归下降的预测分析
-所谓预测分析是指能根据当前的输入符号为非终结符确定采用哪一个选择，LL（1）文法满足这个要求的。递归下降的预测分析是指为每一个非终结符写一个分析过程，由于文法的义是递归的，因此这些过程也是递归的。在处理输入串时，首先执行的是开始符号所对应的隐含地建立了输入的分析树。
-程，然后根据产生式右部出现的非终结符，依次调用相应的过程，这种逐步下降的过程调用序还是通过一个例子来说明如何构造递归下降的预测分析程序。下面的文法产生Pascal语的类型子集，用记号dotdot 表示“”以强调这个字符序列作为一个词法单元。
-type→ simple
-I t id
-I array [ simple] of type simple → integer
-I char
-si果lo
-3.3
-预测
-的预
-含被分
-是$。I num dotdot num
-显然，该文法是LL(1）的。
-图3.8是上面类型定义文法的递归下降预测分析器。这个分析器包括处理非终结符type和simple 的过程以及附加的过程match(）。使用match(）是为了简化type()和simple(）的代码，如果它的参数匹配当前面临的符号，它就调用函数nextToken(），取下一个记号，并更新变量lookahead的值。
-void match (terminal t)
-if(lookahead == t)lookahead = nextToken();
-else error();
-void type()1
-if(（lookahead == integer) |l(lookahead == char) |I(lookahead == num))simple();
-else if(lookahead =='个')(match('t');match (id);)
-else if (lookahead == array)
-match(array);match（'[');simple();match(']');match(of);type();
-else error();
-void simple()
-if(lookahead == integer)match (integer);
-else if (lookahead == char) match (char);
-else if (lookahead == num){match(num);match(dotdot);match(num)；)
-else error();
+- 所谓预测分析是指能根据当前的输入符号为非终结符确定采用哪一个选择，LL(1)文法是满足这个要求的。递归下降的预测分析是指为每一个非终结符写一个分析过程，由于文法的定义是递归的，因此这些过程也是递归的。在处理输入串时，首先执行的是开始符号所对应的过程，然后根据产生式右部出现的非终结符，依次调用相应的过程，这种逐步下降的过程调用序列隐含地建立了输入的分析树。
+- 通过一个例子来说明如何构造递归下降的预测分析程序。下面的文法产生 *Pascal* 语言的类型子集，用记号 **dotdot** 表示“..”以强调这个字符序列作为一个词法单元。
+
+```文法
+type → simple
+      | ↑ id
+      | array [simple] of type
+simple → integer
+        | char
+	| num dotdot num 
+```
+
+> 显然，该文法是LL(1）的。
+
+- 下面的代码是上面类型定义文法的递归下降预测分析器。这个分析器包括处理非终结符 *type* 和 *simple* 的过程以及附加的过程match()。使用match()是为了简化type()和simple()的代码，如果它的参数匹配当前面临的符号，它就调用函数nextToken()，取下一个记号，并更新变量lookahead的值。
+
+```代码
+void match (terminal t){
+	if(lookahead == t) lookahead = nextToken();
+	else error();
+}
+void type(){
+	if((lookahead == integer) || (lookahead == char) || (lookahead == num))simple();
+	else if(lookahead =='↑'){match('t');match (id);}
+	else if (lookahead == array){
+		match(array);match('[');simple();match(']');match(of);type();
+	}
+	else error();
+}
+void simple(){
+	if(lookahead == integer) match(integer);
+	else if (lookahead == char) match (char);
+	else if (lookahead == num) { match(num);match(dotdot);match(num);}
+	else error();
+}
+```
 
 ### 3.3.4 非递归的预测分析
 - [x] 如果显式地维持一个栈，而不是隐式地通过递归调用，那么可以构造非递归的预测分析器。预测分析的关键问题是，在扩展一个非终结符时怎样为它选择合适的产生式，图中的非递归的预测分析器通过查分析表来决定产生式。
